@@ -7,13 +7,17 @@ from flask import render_template
 from flask.ext.script import Manager
 from flask_sqlalchemy import SQLAlchemy
 import os
+
+
+
+
 app=Flask(__name__)
 manager=Manager(app)
 basedir=os.path.abspath(os.path.dirname(__file__))
 app.config['SQLALCHEMY_DATABASE_URI']='sqlite:///'+os.path.join(basedir,'data/sqlite')
 app.config['SQLALCHEMY_COMMIT_ON_TEARDOWN']=True
 db=SQLAlchemy(app)
-print basedir
+
 
 
 # sql jiegou 
@@ -37,12 +41,15 @@ class User(db.Model):
 		return 'table name is %s' %self.__tablename__
 
 
-@app.route('/')
+@app.route('/',methods=['GET','POST'])
 def index():
 	
-	return render_template('index.html',user='wang')
+	return render_template('登录.html')
 	#return 'static uri error'
 
+@app.route('/user',methods=['GET','POST'])
+def data():
+	return render_template('侧边栏-个人中心----TOP5.html')
 
 @app.route('/<anything>')
 def othertry(anything):
